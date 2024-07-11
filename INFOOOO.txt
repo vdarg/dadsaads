@@ -1,0 +1,3 @@
+para arrancar,abri el vsc en esta carpeta en la terminal y usa "node scraper.js"
+
+http://localhost:3000/api/ministerios

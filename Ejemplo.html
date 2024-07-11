@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ministerios del Gobierno</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .ministerio {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .ministerio h2 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .ministerio p {
+            font-size: 14px;
+            color: #666;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ministerios del Gobierno</h1>
+        <div id="ministerios-lista"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('http://localhost:3000/')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data); // Verifica el formato de los datos recibidos
+                    const ministeriosLista = document.getElementById('ministerios-lista');
+                    Object.entries(data).forEach(([ministerio, titular]) => {
+                        const ministerioElement = document.createElement('div');
+                        ministerioElement.classList.add('ministerio');
+                        ministerioElement.innerHTML = `
+                            <h2>${formatMinisterio(ministerio)}</h2>
+                            <p>${titular}</p>
+                        `;
+                        ministeriosLista.appendChild(ministerioElement);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error al obtener los datos de los ministerios:', error);
+                });
+        });
+
+        function formatMinisterio(ministerio) {
+            // Formatea el nombre del ministerio para mostrarlo correctamente
+            switch (ministerio) {
+                case 'presidencia':
+                    return 'Presidencia de la Nación';
+                case 'jefatura':
+                    return 'Jefatura de Gabinete de Ministros';
+                case 'economia':
+                    return 'Ministerio de Economía';
+                case 'seguridad':
+                    return 'Ministerio de Seguridad';
+                case 'capHumano':
+                    return 'Ministerio de Capital Humano';
+                case 'desregulacion':
+                    return 'Ministerio de Desregulación y Transformación del Estado';
+                case 'salud':
+                    return 'Ministerio de Salud';
+                case 'exterior':
+                    return 'Ministerio de Relaciones Exteriores, Comercio Internacional y Culto';
+                case 'justicia':
+                    return 'Ministerio de Justicia';
+                case 'defensa':
+                    return 'Ministerio de Defensa';
+                default:
+                    return ministerio; // En caso de no encontrar el ministerio, devuelve el nombre sin cambios
+            }
+        }
+    </script>
+</body>
+</html>
